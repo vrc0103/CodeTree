@@ -54,10 +54,10 @@ public class Main {
         int[] start = new int[num];
         res = Integer.MAX_VALUE;
 
-        start[0] = 0;
-        comb(1, num, start);
+        // start[0] = 0;
+        // comb(1, num, start);
 
-        start[0] = exist.get(1);
+        start[0] = 1;
         comb(1, num, start);
 
         sb.append(res).append("\n");
@@ -68,6 +68,9 @@ public class Main {
             int max = 0;
             int dist = 0;
 
+            // if(num == 3) {
+            //     System.out.println(Arrays.toString(start) + "  " + exist);
+            // }
             // 각 개미 이동 거리
             for(int i = 1; i < num; i++) {
                 int from = map.get(exist.get(start[i - 1]));
@@ -75,12 +78,24 @@ public class Main {
 
                 dist = to - from;
                 max = Math.max(max, dist);
+
+                // if(num == 3) {
+                //     System.out.println(exist.get(start[i - 1]) + " ~ " + exist.get(start[i] - 1) + " : " + to + " - " + from  + " = " + dist);
+                // }
             }
 
             // 마지막 개미 이동 거리
-            dist = map.get(exist.size() - 1) - map.get(exist.get(start[num - 1]));
+            dist = map.get(exist.get(exist.size() - 1)) - map.get(exist.get(start[num - 1]));
             max = Math.max(max, dist);
 
+            // if(num == 3) {
+            //     System.out.printf("%d ~ %d : %d - %d = %d\n",
+            //                                 start[num - 1],
+            //                                 map.size() - 1,
+            //                                 map.get(map.size() - 1),
+            //                                 map.get(start[num - 1]),
+            //                                 dist);
+            // }
             res = Math.min(res, max);
 
             return;
