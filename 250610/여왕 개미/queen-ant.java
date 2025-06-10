@@ -12,9 +12,12 @@ public class Main {
         sb = new StringBuilder();
 
         map = new ArrayList<>();
-        cnt = Integer.parseInt(br.readLine().trim()) - 1;
+        map.add(0);
+
+        cnt = Integer.parseInt(br.readLine().trim());
 
         // init
+        cnt--;
         StringTokenizer st = new StringTokenizer(br.readLine().trim());
         st.nextToken(); // 첫 숫자는 무조건 100
         int num = Integer.parseInt(st.nextToken());
@@ -48,7 +51,9 @@ public class Main {
 
         int[] start = new int[num];
         start[0] = 0;
+        comb(1, num, start);
 
+        start[0] = 1;
         comb(1, num, start);
 
         sb.append(res).append("\n");
