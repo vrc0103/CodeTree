@@ -4,7 +4,6 @@ import java.util.*;
 public class Main {
     static StringBuilder sb;
     static int idx;
-    static int cnt;
     static int res;
     static List<Integer> map;
     static List<Integer> exist;
@@ -19,7 +18,7 @@ public class Main {
         exist.add(idx++);
 
         // init
-        cnt = Integer.parseInt(br.readLine().trim()) - 1;
+        int cnt = Integer.parseInt(br.readLine().trim()) - 1;
         StringTokenizer st = new StringTokenizer(br.readLine().trim());
         st.nextToken(); // 첫 숫자는 무조건 100
         int num = Integer.parseInt(st.nextToken());
@@ -54,56 +53,35 @@ public class Main {
         int[] start = new int[num];
         res = Integer.MAX_VALUE;
 
-        // start[0] = 0;
-        // comb(1, num, start);
+        int left = 0;
+        int right = map.get(exist.get(exist.size() - 1)) - map.get(exist.get(1));
 
-        start[0] = 1;
-        comb(1, num, start);
+        while(left <= right) {
+            int cnt = 1;
+            int mid = (left + right) / 2;
+            int now = map.get(exist.get(1));
 
-        sb.append(res).append("\n");
-    }
+            for(int i = 1; i < exist.size(); i++) {
+                if(map.get(exist.get(i)) - now <= mid) {
+                    continue;
+                }
 
-    static void comb(int count, int num, int[] start) {
-        if(count == num) {
-            int max = 0;
-            int dist = 0;
-
-            // if(num == 3) {
-            //     System.out.println(Arrays.toString(start) + "  " + exist);
-            // }
-            // 각 개미 이동 거리
-            for(int i = 1; i < num; i++) {
-                int from = map.get(exist.get(start[i - 1]));
-                int to = map.get(exist.get(start[i] - 1));
-
-                dist = to - from;
-                max = Math.max(max, dist);
-
-                // if(num == 3) {
-                //     System.out.println(exist.get(start[i - 1]) + " ~ " + exist.get(start[i] - 1) + " : " + to + " - " + from  + " = " + dist);
-                // }
+                now = map.get(exist.get(i));
+                cnt++;
             }
 
-            // 마지막 개미 이동 거리
-            dist = map.get(exist.get(exist.size() - 1)) - map.get(exist.get(start[num - 1]));
-            max = Math.max(max, dist);
+            if(cnt <= num) {
+                right = mid - 1;
+                res = mid;
+            } else {
+                left = mid + 1;
+            }
 
-            // if(num == 3) {
-            //     System.out.printf("%d ~ %d : %d - %d = %d\n",
-            //                                 start[num - 1],
-            //                                 map.size() - 1,
-            //                                 map.get(map.size() - 1),
-            //                                 map.get(start[num - 1]),
-            //                                 dist);
-            // }
-            res = Math.min(res, max);
-
-            return;
+            // System.out.printf("개미 : %d , 거리 : %d , 결과 : %d\n", cnt, mid, res);
         }
 
-        for(int i = start[count - 1] + 1; i < exist.size(); i++) {
-            start[count] = i;
-            comb(count + 1, num, start);
-        }
+        // System.out.println();
+
+        sb.append(res).append("\n");
     }
 }
