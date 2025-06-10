@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
     static StringBuilder sb;
-    static int next;
+    static int idx;
     static int cnt;
     static int res;
     static List<Integer> map;
@@ -16,7 +16,7 @@ public class Main {
         map = new ArrayList<>();
         map.add(0);
         exist = new ArrayList<>();
-        exist.add(next++);
+        exist.add(idx++);
 
         // init
         cnt = Integer.parseInt(br.readLine().trim()) - 1;
@@ -26,7 +26,7 @@ public class Main {
 
         while(num-- > 0) {
             map.add(Integer.parseInt(st.nextToken()));
-            exist.add(next++);
+            exist.add(idx++);
         }
 
         // cmd
@@ -37,7 +37,7 @@ public class Main {
             if(cmd == 200) {
                 int loc = Integer.parseInt(st.nextToken());
                 map.add(loc);
-                exist.add(next++);
+                exist.add(idx++);
             } else if(cmd == 300) {
                 int loc = Integer.parseInt(st.nextToken());
                 exist.remove(Collections.binarySearch(exist, loc));
@@ -86,7 +86,7 @@ public class Main {
             return;
         }
 
-        for(int i = count; i < exist.size(); i++) {
+        for(int i = start[count - 1] + 1; i < exist.size(); i++) {
             start[count] = i;
             comb(count + 1, num, start);
         }
