@@ -63,7 +63,7 @@ public class Main {
         System.out.print(sb);
     }
 
-    static void insert(int r1, int c1, int r2, int c2) {
+    static void insert(int x1, int y1, int x2, int y2) {
         /*
         * 영역 내 기존 미생물을 덮어씀
         * 기존 미생물의 영역이 둘 이상으로 나뉘면 모두 증발
@@ -72,24 +72,24 @@ public class Main {
         ArrayDeque<Integer> removed = new ArrayDeque<>();
         boolean[] checked = new boolean[idx + 1];
 
-        for(int x = c1; x < c2; x++) {
-            for(int y = r1; y < r2; y++) {
-                if(map[x][y] > 0) {
-                    if(!checked[map[x][y]]) {
-                        checked[map[x][y]] = true;
-                        removed.offer(map[x][y]);
+        for(int x = x1; x < x2; x++) {
+            for(int y = y1; y < y2; y++) {
+                if(map[y][x] > 0) {
+                    if(!checked[map[y][x]]) {
+                        checked[map[y][x]] = true;
+                        removed.offer(map[y][x]);
                     }
 
-                    areaSize[map[x][y]]--;
+                    areaSize[map[y][x]]--;
 
                     for(int i = 0; i < area.size(); i++) {
-                        if(area.get(i).num == map[x][y]) {
+                        if(area.get(i).num == map[y][x]) {
                             area.get(i).count--;
                         }
                     }
                 }
 
-                map[x][y] = idx;
+                map[y][x] = idx;
                 areaSize[idx]++;
             }
         }
@@ -107,9 +107,9 @@ public class Main {
             int split = 0;
             boolean[][] visited = new boolean[size][size];
             
-            first: for(int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
-                    if(!visited[r][c] && map[r][c] == num) {
+            first: for(int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+                    if(!visited[y][x] && map[y][x] == num) {
                         split++;
 
                         // System.out.printf("num : %d , split : %d\n", num, split);
@@ -121,24 +121,24 @@ public class Main {
 
                         ArrayDeque<int[]> bfs = new ArrayDeque<>();
 
-                        bfs.offer(new int[] {r, c});
-                        visited[r][c] = true;
+                        bfs.offer(new int[] {y, x});
+                        visited[y][x] = true;
                         while(!bfs.isEmpty()) {
                             int[] now = bfs.poll();
 
                             // System.out.print(Arrays.toString(now) + "  ");
 
                             for(int i = 0; i < 4; i++) {
-                                int nextR = now[0] + dR[i];
-                                int nextC = now[1] + dC[i];
+                                int nextY = now[0] + dR[i];
+                                int nextX = now[1] + dC[i];
 
-                                if(nextR < 0 || nextR >= size || nextC < 0 || nextC >= size) {
+                                if(nextY < 0 || nextY >= size || nextX < 0 || nextX >= size) {
                                     continue;
                                 }
 
-                                if(!visited[nextR][nextC] && map[nextR][nextC] == num) {
-                                    visited[nextR][nextC] = true;
-                                    bfs.offer(new int[] {nextR, nextC});
+                                if(!visited[nextY][nextX] && map[nextY][nextX] == num) {
+                                    visited[nextY][nextX] = true;
+                                    bfs.offer(new int[] {nextY, nextX});
                                 }
                             }
                         }
