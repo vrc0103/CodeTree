@@ -96,11 +96,6 @@ public class Main {
 
         area.add(new Area(idx, areaSize[idx]));
 
-        // System.out.println("insert");
-        // for(int i = size - 1; i >= 0; i--) {
-        //     System.out.println(Arrays.toString(map[i]));
-        // }
-
         // 잡아먹힌 각 미생물 파악
         while(!removed.isEmpty()) {
             int num = removed.poll();
@@ -111,8 +106,6 @@ public class Main {
                 for (int x = 0; x < size; x++) {
                     if(!visited[y][x] && map[y][x] == num) {
                         split++;
-
-                        // System.out.printf("num : %d , split : %d\n", num, split);
 
                         // 탐색된 미생물이 다시 등장 : 분리된 미생물
                         if(split >= 2) {
@@ -125,8 +118,6 @@ public class Main {
                         visited[y][x] = true;
                         while(!bfs.isEmpty()) {
                             int[] now = bfs.poll();
-
-                            // System.out.print(Arrays.toString(now) + "  ");
 
                             for(int i = 0; i < 4; i++) {
                                 int nextY = now[0] + dR[i];
@@ -166,18 +157,11 @@ public class Main {
         * 4. 이동이 불가능한 미생물은 증발
         */
 
-        // System.out.println("call move - area.size : " + area.size());
-
-        // for(int i = 0; i < area.size(); i++) {
-        //     System.out.printf("num : %d , count : %d\n", area.get(i).num, area.get(i).count);
-        // }
-
         int[][] newMap = new int[size][size];
         Collections.sort(area);
 
         for(int i = 0; i < area.size(); i++) {
             if(area.get(i).count == 0) {
-                // System.out.printf("removed num : %d\n", area.get(i).num);
                 area.remove(i);
                 i--;
                 continue;
