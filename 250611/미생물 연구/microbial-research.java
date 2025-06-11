@@ -147,6 +147,8 @@ public class Main {
             }
 
             if(split >= 2) {
+                areaSize[num] = 0;
+
                 for(int i = 0; i < area.size(); i++) {
                     if(area.get(i).num == num) {
                         area.get(i).count = 0;
@@ -200,7 +202,7 @@ public class Main {
                 }
             }
 
-            int count = area.get(i).count;
+            int count = micro.size();
 
             // System.out.printf("num : %d , count : %d\n", num, count);
 
